@@ -1,0 +1,39 @@
+﻿@model ContactViewModel
+@{
+    var confirmationMessage = TempData["ConfirmationMessage"] == null ? string.Empty : TempData["ConfirmationMessage"].ToString();
+    ViewData["Title"] = "Create Contact";
+}
+
+@if (!string.IsNullOrEmpty(confirmationMessage))
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        @confirmationMessage
+    </div>
+}
+
+<h2>Create Contact</h2>
+
+<form asp-action="Create" method="post" id="createContactForm">
+    <div class="form-group">
+        <label>First Name</label>
+        <input asp-for="@Model.FirstName" class="form-control" />
+        <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Last Name</label>
+        <input asp-for="@Model.LastName" class="form-control" />
+        <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input asp-for="@Model.Email" class="form-control" />
+        <span asp-validation-for="@Model.Email" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
