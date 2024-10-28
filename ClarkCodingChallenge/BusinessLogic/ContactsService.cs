@@ -1,5 +1,7 @@
 ﻿using ClarkCodingChallenge.DataAccess.Interfaces;
+using ClarkCodingChallenge.DataMapping;
 using ClarkCodingChallenge.Models;
+using ClarkCodingChallenge.Models.Api;
 using ClarkCodingChallenge.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,34 +14,38 @@ namespace ClarkCodingChallenge.DataAccess
 		#region Members
 
 		private readonly IRepository<ContactEntity> contactsRepository;
+		private readonly ContactDataMapper mapper;
 
 		#endregion
 
 		#region Construction
 
-		public ContactsService(IRepository<ContactEntity> contactsRepository)
+		public ContactsService(IRepository<ContactEntity> contactsRepository, ContactDataMapper mapper)
 		{
 			this.contactsRepository = contactsRepository;
+			this.mapper = mapper;
 		}
 
 		#endregion
 
 		#region Methods
 
-		public void AddContact(ContactEntity contact)
+		public void AddContact(ContactViewModel contactViewModel)
 		{
-			this.contactsRepository.Add(contact);
+			this.contactsRepository.Add(this.mapper.ToEntity(contactViewModel));
 		}
 
-		public IEnumerable<ContactEntity> SearchContacts(string lastName, bool sortByLastNameDescending)
+		public IEnumerable<ContactDTO> SearchContacts(string lastName, bool sortByDescending)
 		{
 			var contacts = string.IsNullOrEmpty(lastName)
 						 ? this.contactsRepository.GetAll()
 						 : this.contactsRepository.Where(x => x.LastName.Equals(lastName, StringComparison.OrdinalIgnoreCase));
 
-			return sortByLastNameDescending
-				 ? contacts.OrderByDescending(x => x.LastName).ThenBy(x => x.FirstName)
-				 : contacts.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
+			contacts = sortByDescending
+				     ? contacts.OrderByDescending(x => x.LastName).ThenByDescending(x => x.FirstName)
+				     : contacts.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
+
+			return contacts.Select(x => this.mapper.ToApiModel(x));
 		}
 
 		#endregion

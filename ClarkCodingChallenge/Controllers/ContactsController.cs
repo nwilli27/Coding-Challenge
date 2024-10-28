@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ClarkCodingChallenge.Models;
 using ClarkCodingChallenge.DataAccess;
-using ClarkCodingChallenge.DataMapping;
 
 namespace ClarkCodingChallenge.Controllers
 {
@@ -34,7 +33,7 @@ namespace ClarkCodingChallenge.Controllers
         {
             if (ModelState.IsValid)
             {
-				this.contactsService.AddContact(ContactDataMapper.ToEntity(model));
+				this.contactsService.AddContact(model);
 				this.addConfirmationMessage($"Contact {model.FullName} created successfully.");
                 return RedirectToAction(nameof(Create));
             }
@@ -43,6 +42,9 @@ namespace ClarkCodingChallenge.Controllers
                 return View(model);
             }
         }
+
+        [HttpGet]
+        public IActionResult Search(string lastName, bool sortByDescending) => this.Ok(this.contactsService.SearchContacts(lastName, sortByDescending));
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

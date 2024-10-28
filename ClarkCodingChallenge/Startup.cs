@@ -1,6 +1,7 @@
 ﻿using ClarkCodingChallenge.DataAccess;
 using ClarkCodingChallenge.DataAccess.Implementations;
 using ClarkCodingChallenge.DataAccess.Interfaces;
+using ClarkCodingChallenge.DataMapping;
 using ClarkCodingChallenge.Models.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,7 +34,9 @@ namespace ClarkCodingChallenge
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddSingleton<IRepository<ContactEntity>, InMemoryRepository<ContactEntity>>();
+
             services.AddTransient<ContactsService>();
+            services.AddTransient<ContactDataMapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

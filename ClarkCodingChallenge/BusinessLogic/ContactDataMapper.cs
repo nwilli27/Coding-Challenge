@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ClarkCodingChallenge.DataMapping
 {
-	public static class ContactDataMapper
+	public class ContactDataMapper
 	{
-        public static ContactEntity ToEntity(ContactViewModel viewModel)
+        public ContactEntity ToEntity(ContactViewModel viewModel)
         {
             return new ContactEntity
             {
@@ -20,7 +20,7 @@ namespace ClarkCodingChallenge.DataMapping
             };
         }
 
-        public static ContactViewModel ToViewModel(ContactEntity entity)
+        public ContactViewModel ToViewModel(ContactEntity entity)
         {
             return new ContactViewModel
             {
@@ -30,9 +30,9 @@ namespace ClarkCodingChallenge.DataMapping
             };
         }
 
-        public static ContactApiResponseModel ToApiModel(ContactEntity entity)
+        public ContactDTO ToApiModel(ContactEntity entity)
         {
-            return new ContactApiResponseModel
+            return new ContactDTO
             {
                 FirstName = entity.FirstName,
                 LastName = entity.LastName,

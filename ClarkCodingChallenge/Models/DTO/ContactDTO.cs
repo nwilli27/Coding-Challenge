@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ClarkCodingChallenge.Models.Api
 {
-	public class ContactApiResponseModel
+	public class ContactDTO
 	{
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
