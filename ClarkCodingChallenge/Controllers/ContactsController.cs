@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ClarkCodingChallenge.Models;
 using ClarkCodingChallenge.DataAccess;
+using ClarkCodingChallenge.BusinessLogic.Interfaces;
 
 namespace ClarkCodingChallenge.Controllers
 {
@@ -9,13 +10,13 @@ namespace ClarkCodingChallenge.Controllers
     {
         #region Properties
 
-        private readonly ContactsService contactsService;
+        private readonly IContactsService contactsService;
 
         #endregion
 
         #region Construction
 
-        public ContactsController(ContactsService contactsService)
+        public ContactsController(IContactsService contactsService)
 		{
             this.contactsService = contactsService;
 		}
@@ -45,12 +46,6 @@ namespace ClarkCodingChallenge.Controllers
 
         [HttpGet]
         public IActionResult Search(string lastName, bool sortByDescending) => this.Ok(this.contactsService.SearchContacts(lastName, sortByDescending));
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
 
         #endregion
 

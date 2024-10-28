@@ -20,16 +20,6 @@ namespace ClarkCodingChallenge.DataMapping
             };
         }
 
-        public ContactViewModel ToViewModel(ContactEntity entity)
-        {
-            return new ContactViewModel
-            {
-                FirstName = entity.FirstName,
-                LastName = entity.LastName,
-                Email = entity.Email
-            };
-        }
-
         public ContactDTO ToApiModel(ContactEntity entity)
         {
             return new ContactDTO

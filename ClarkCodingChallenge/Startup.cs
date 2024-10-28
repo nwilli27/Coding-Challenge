@@ -1,4 +1,5 @@
-﻿using ClarkCodingChallenge.DataAccess;
+﻿using ClarkCodingChallenge.BusinessLogic.Interfaces;
+using ClarkCodingChallenge.DataAccess;
 using ClarkCodingChallenge.DataAccess.Implementations;
 using ClarkCodingChallenge.DataAccess.Interfaces;
 using ClarkCodingChallenge.DataMapping;
@@ -35,7 +36,7 @@ namespace ClarkCodingChallenge
 
             services.AddSingleton<IRepository<ContactEntity>, InMemoryRepository<ContactEntity>>();
 
-            services.AddTransient<ContactsService>();
+            services.AddScoped<IContactsService, ContactsService>();
             services.AddTransient<ContactDataMapper>();
         }
 
