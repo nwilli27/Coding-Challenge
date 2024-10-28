@@ -33,7 +33,7 @@ namespace ClarkCodingChallenge
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddSingleton<IRepository<ContactEntity>, InMemoryRepository<ContactEntity>>();
-            services.AddTransient<ContactsDataAccess>();
+            services.AddTransient<ContactsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

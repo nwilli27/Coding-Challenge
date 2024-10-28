@@ -10,15 +10,15 @@ namespace ClarkCodingChallenge.Controllers
     {
         #region Properties
 
-        private readonly ContactsDataAccess contactsDataAccess;
+        private readonly ContactsService contactsService;
 
         #endregion
 
         #region Construction
 
-        public ContactsController(ContactsDataAccess contactsDataAccess)
+        public ContactsController(ContactsService contactsService)
 		{
-            this.contactsDataAccess = contactsDataAccess;
+            this.contactsService = contactsService;
 		}
 
         #endregion
@@ -27,17 +27,14 @@ namespace ClarkCodingChallenge.Controllers
 
         public IActionResult Index() => RedirectToAction("Create");
 
-        public IActionResult Create()
-        {
-            return View(new ContactViewModel());
-        }
+        public IActionResult Create() => View(new ContactViewModel());
 
         [HttpPost]
         public IActionResult Create(ContactViewModel model)
         {
             if (ModelState.IsValid)
             {
-				this.contactsDataAccess.SaveContact(ContactDataMapper.ToEntity(model));
+				this.contactsService.AddContact(ContactDataMapper.ToEntity(model));
 				this.addConfirmationMessage($"Contact {model.FullName} created successfully.");
                 return RedirectToAction(nameof(Create));
             }

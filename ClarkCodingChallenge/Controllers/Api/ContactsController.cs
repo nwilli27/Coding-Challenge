@@ -14,15 +14,15 @@ namespace ClarkCodingChallenge.Controllers.Api
 	{
 		#region Members
 
-		private readonly ContactsDataAccess contactsDataAccess;
+		private readonly ContactsService contactsService;
 
 		#endregion
 
 		#region Construction
 
-		public ContactsController(ContactsDataAccess contactsDataAccess)
+		public ContactsController(ContactsService contactsService)
 		{
-			this.contactsDataAccess = contactsDataAccess;
+			this.contactsService = contactsService;
 		}
 
 		#endregion
@@ -32,7 +32,7 @@ namespace ClarkCodingChallenge.Controllers.Api
 		[HttpGet]
 		public IActionResult Search(string lastName, bool sortByLastNameDescending)
 		{
-			var contacts = this.contactsDataAccess.SearchByLastName(lastName, sortByLastNameDescending);
+			var contacts = this.contactsService.SearchContacts(lastName, sortByLastNameDescending);
 			var contactResponse = contacts.Select(x => ContactDataMapper.ToApiModel(x));
 
 			return this.Ok(contactResponse);
